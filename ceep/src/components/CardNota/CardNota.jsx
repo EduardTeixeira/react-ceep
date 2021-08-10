@@ -10,6 +10,7 @@ class CardNota extends Component {
   }
 
   render() {
+    console.log('Render CardNota.jsx');
     return (
       <section className="card-nota">
         <header className="card-nota_cabecalho">

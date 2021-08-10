@@ -2,11 +2,26 @@ import React, { Component } from "react";
 import "./estilo.css";
 
 class FormularioCadastro extends Component {
+
   constructor(props) {
     super(props);
     this.titulo = '';
     this.texto = '';
     this.categoria = 'Sem Categoria';
+    this.state = { categorias: [] };
+    this._novasCategorias = this._novasCategorias.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.categorias.inscrever(this._novasCategorias);
+  }
+
+  _novasCategorias(categorias) {
+    this.setState({ ...this.state, categorias });
+  }
+
+  componentWillUnmount() {
+    this.props.categorias.desinscrever(this._novasCategorias);
   }
 
   handleMudancaTitulo(event) {
@@ -36,6 +51,7 @@ class FormularioCadastro extends Component {
   }
 
   render() {
+    console.log('Render FormularioCadastro.jsx');
     return (
       <form
         className="form-cadastro"
@@ -46,8 +62,8 @@ class FormularioCadastro extends Component {
           onChange={this._handleMudancaCategoria.bind(this)}
         >
           <option>Sem Categoria</option>
-          {this.props.categorias.map((categoria) => {
-            return <option>{categoria}</option>
+          {this.state.categorias.map((categoria, index) => {
+            return <option key={index}>{categoria}</option>
           })}
         </select>
         <input
